@@ -3,7 +3,7 @@
 
 ## Description
 
-For this assignment, rewrite your [`http-simple-persistence` assignment](../../http-simple-persistence/master/LAB.md)
+For this assignment, rewrite your [`http-simple-persistence` assignment](../../../http-simple-persistence/blob/master/LAB.md)
 using ExpressJS.
 
 Go ahead and cut and paste your data storage module(s) into this project, you shouldn't
