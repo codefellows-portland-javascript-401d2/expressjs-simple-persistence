@@ -1,4 +1,4 @@
-![cf](http://i.imgur.com/7v5ASc8.png) expressjs-simple-persistence
+![cf](http://i.imgur.com/7v5ASc8.png) expressjs-single-resource-api
 ====
 
 Lab assignment instructions are located [here](LAB.md)
