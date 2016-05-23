@@ -13,6 +13,10 @@ You API E2E tests should also be usable "as-is". Though correctness trumps re-us
 
 All requirements are still in play.
 
+## Bonus
+
+Create static files and/or rendered templates that allow you to exercise your API: 5pts
+
 #### Rubric:
 * Correclty working CRUD API: 3pts
 * Code Quality: 2pts
