@@ -1,92 +1,64 @@
 var db = require('./database');
-var http = require('http');
-var path = require('path');
+const express = require('express');
 
-db.createDir();
+var app = express();
 
-var server = http.createServer((request, response) => {
-  
-  var baseName = path.parse(request.url).base;
-  
-  //  GET - - - - - - - - - - - - -- - - - - - - - - - - - - -
-  if (request.method === 'GET') {
+db.createDir();  // creates data folder if not existing
 
-    db.fetchAll(function(err, array) {
-      var index = array.indexOf(baseName);
-      // if requested resource exists in database
-      if (index !== -1) {
-        db.read(array[index], function(contents) {
-          response.writeHead(200, {'Content-Type': 'application/json'});
-          response.write(contents);
-          response.end();
-        });
-      } else {
-         // List All Dogs
-        if (request.url === '/dogs') {
-          response.writeHead(200, {'Content-Type': 'text/html'});
-          db.fetchAll(function(err, results) {
-            if (err) throw err;
-            response.write(results.toString());
-            response.end();
-          });
-          //Index Page
-        } else if (request.url === '/') {
-          response.writeHead(200, {'Content-Type': 'text/html'});
-          response.write('index page!');
-          response.end();
-          // 404 
-        } else {
-          response.writeHead(404, {'Content-Type': 'text/html'});
-          response.write('404: Page Not Found');
-          response.end();
-        }
-      }
-    });
-  } 
-  //  POST  - - - - - - - - - - - - - - - 
-  else if (request.method === 'POST') {
-    var body = '';
-    request.on('data', (chunk) => {
-      body += chunk;
-    });
-    request.on('end', () => {
-      var parsedBody = JSON.parse(body);
-      var thisBreed = parsedBody.breed;
-      db.write(`${thisBreed}.json`, body);
-      response.end();
-    });
-  } 
-   //  PUT  - - - - - - - - - - - - - - -
-  else if (request.method === 'PUT') {
-    var body = '';
-    request.on('data', chunk => {
-      body += chunk;  
-    });
-    request.on('end', () => {
-      db.write(baseName, body);
-      response.end();
-    });
-  } 
-//  DELETE - - - - - - - - - - - - - - - - 
-  else if (request.method === 'DELETE') {
-    db.destroy(baseName, (err) => {
-      if (err) {
-        response.writeHead(400, {'Content-Type': 'text/html'});
-        response.write(`${baseName} not found in database, sorry.`);
-        response.end();
-      } else {
-        response.writeHead(200, {'Content-Type': 'text/html'});
-        response.write(`${baseName} deleted from database, are you happy now?`);
-        response.end();
-      }
-    });
-  } 
-  
-  else {
-    response.writeHead(400, {'Content-Type': 'text/html'});
-    response.write('Bad Verb');
-    response.end();
-  }
+//  G E T
+app.get('/', (request, response) => {
+  response.send('Welcome to Doggie Information Resource Help Assistance Center for Doggie Enthusiasts');
+});
+// ---
+app.get('/dogs', (request, response) => {
+  db.fetchAll((err, array) => {
+    if (err) response.json({Error: 'Something went wrong, sorry'});
+    response.json({Dogs: array.toString()});
+  });
+});
+// ---
+app.get('/dogs/:breed', (request, response) => {
+  var resource = request.params.breed;
+  db.read(`${resource}.json`, (err, data) => {
+    if (err) response.json({Error: 'Something went wrong, sorry'});
+    response.json(data);
+  });
 });
 
-module.exports = server;
+// P O S T 
+app.post('/dogs', (request, response) => {
+  var body = '';
+  request.on('data', chunk => {
+    body += chunk;
+  });
+  request.on('end', () => {
+    var parsedBody = JSON.parse(body);
+    var thisBreed = parsedBody.breed;
+    db.write(`${thisBreed}.json`, body, (err, data) => {
+      if (err) response.json({Error: 'Something went wrong, sorry'});
+      response.json({Success: data}); 
+    });
+  });
+});
+
+//  P U T
+app.put('/dogs/:breed', (request, response) => {
+  var breed = request.params.breed;
+  db.write(`${breed}.json`, request.body, (err, data) => {
+    if (err) response.json({Error: 'Something went wrong, sorry'});
+    response.json({Success: data});
+  });
+});
+
+//  D E L E T E
+app.delete('/dogs/:breed', (request, response) => {
+  var breed = request.params.breed;
+  db.destroy(breed, (err) => {
+    if (err) response.json({Error: 'Something went wrong, sorry'});
+    response.json({Success: data});
+  });
+});
+ 
+app.listen(8080);
+  
+module.exports = app;

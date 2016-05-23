@@ -1,7 +1,7 @@
 {
-  "name": "simple-persist-server",
+  "name": "express-resource-server",
   "version": "1.0.0",
-  "description": "![cf](http://i.imgur.com/7v5ASc8.png) http-simple-persistence\r ====",
+  "description": "![cf](http://i.imgur.com/7v5ASc8.png) express-resource-server\r ====",
   "main": "index.js",
   "directories": {
     "test": "test"
@@ -12,14 +12,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DonChatelain/http-simple-persistence.git"
+    "url": "git+https://github.com/DonChatelain/express-resource-server.git"
   },
   "author": "Don Chatelain",
+  "contributors": ["Yvonne Hayes", "Johnny Luangphasy"],
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/DonChatelain/http-simple-persistence/issues"
+    "url": "https://github.com/DonChatelain/express-resource-server/issues"
   },
-  "homepage": "https://github.com/DonChatelain/http-simple-persistence#readme",
+  "homepage": "https://github.com/DonChatelain/express-resource-server#readme",
   "devDependencies": {
     "chai": "^3.5.0",
     "chai-http": "^2.0.1",
@@ -27,6 +28,7 @@
     "nodemon": "^1.9.2"
   },
   "dependencies": {
+    "express": "^4.13.4",
     "mkdirp": "^0.5.1"
   }
 }
