@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/goodwid/expressjs-single-resource-api#readme",
   "dependencies": {
+    "body-parser": "^1.15.1",
     "express": "^4.13.4",
     "sander": "^0.5.1"
   },

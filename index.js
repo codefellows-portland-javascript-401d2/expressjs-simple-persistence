@@ -1,5 +1,5 @@
 #!/usr/bin/env node
 
-const server = require('./server');
+const app = require('./app');
 
-server.listen(process.argv[2] || 8080);
+app.listen(process.argv[2] || 8080);
