@@ -1,38 +1,41 @@
 const fs = require('fs');
-var mkdirp = require('mkdirp');
-var db = {};
+const mkdirp = require('mkdirp');
+const db = {};
 
 db.directory = './data';
 
-db.createDir = function() {
-  mkdirp('./data', function(err) {
-    if (err) throw err;
-    else console.log('/data created in project folder');
+db.createDir = (callback) => {
+  mkdirp('./data', (err) => {
+    if (err) callback(err);
+    callback(null, '/data created in project folder');
   });
 };
 
-db.fetchAll = function(callback) {
+db.fetchAll = (callback) => {
   fs.readdir(db.directory, function(err, fileNames) {
-    if (err) throw err;
+    if (err) callback(err);
     callback(null, fileNames);
   });
 };
 
-db.read = function(file, callback) {
+db.read = (file, callback) => {
   fs.readFile(`${db.directory}/${file}`,(err, contents) => {
-    callback(contents.toString());
+    if (err) callback(err);
+    callback(null, contents.toString());
   });
 };
 
-db.write = function(newFile, content) {
-  var writeStream = fs.createWriteStream(`${db.directory}/${newFile}`);
-  writeStream.write(content);       
+db.write = (newFile, content, callback) => {
+  fs.writeFile(`${db.directory}/${newFile}`, content, (err) => {
+    if (err) callback(err);
+    callback(null, `${newFile} saved!`);
+  });
 };
 
-db.destroy = function(path, callback) {
+db.destroy = (path, callback) => {
   fs.unlink(`${db.directory}/${path}`, (err) => {
     if (err) callback(err);
-    else callback();
+    callback(null, `${path} removed!`);
   });
 };
 
