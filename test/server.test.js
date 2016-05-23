@@ -166,7 +166,7 @@ describe('server',() => {
           .end((err,res) => {
             var result = JSON.parse(res.text);
             assert.equal(res.statusCode, 200);
-            assert.isOk(result);
+            assert.propertyVal(result, 'message', 'deleted ' + testResource);
             done();
           });
       });

@@ -26,7 +26,7 @@ app.put('/books/:id', (req, res) => {
 });
 
 app.delete('/books/:id', (req, res) => {
-  db.update(req.params.id)
+  db.delete(req.params.id)
     .then(data => res.send(data));
 });
 
