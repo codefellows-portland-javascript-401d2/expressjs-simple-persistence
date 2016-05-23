@@ -12,8 +12,12 @@ db.createDir = (callback) => {
 };
 
 db.fetchAll = (callback) => {
-  fs.readdir(db.directory, function(err, fileNames) {
+  fs.readdir(db.directory, function(err, files) {
     if (err) callback(err);
+    var fileNames = files.map(x => {
+      var y = x.split('.'); 
+      return y[0];
+    });
     callback(null, fileNames);
   });
 };
@@ -21,7 +25,7 @@ db.fetchAll = (callback) => {
 db.read = (file, callback) => {
   fs.readFile(`${db.directory}/${file}`,(err, contents) => {
     if (err) callback(err);
-    callback(null, contents.toString());
+    callback(null, contents);
   });
 };
 

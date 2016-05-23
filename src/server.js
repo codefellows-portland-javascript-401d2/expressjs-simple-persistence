@@ -3,7 +3,10 @@ const express = require('express');
 
 var app = express();
 
-db.createDir();  // creates data folder if not existing
+// creates data folder if not existing
+db.createDir((err, data) => {
+  console.log(data);
+});  
 
 //  G E T
 app.get('/', (request, response) => {
@@ -13,15 +16,18 @@ app.get('/', (request, response) => {
 app.get('/dogs', (request, response) => {
   db.fetchAll((err, array) => {
     if (err) response.json({Error: 'Something went wrong, sorry'});
-    response.json({Dogs: array.toString()});
+    response.json({dogs: array});
   });
 });
 // ---
 app.get('/dogs/:breed', (request, response) => {
   var resource = request.params.breed;
   db.read(`${resource}.json`, (err, data) => {
-    if (err) response.json({Error: 'Something went wrong, sorry'});
-    response.json(data);
+    if (err) {
+      response.status(404);
+      response.json({Error: 'Resource Not Found'});
+    }
+    if (data) response.send(data.toString());
   });
 });
 
@@ -36,7 +42,7 @@ app.post('/dogs', (request, response) => {
     var thisBreed = parsedBody.breed;
     db.write(`${thisBreed}.json`, body, (err, data) => {
       if (err) response.json({Error: 'Something went wrong, sorry'});
-      response.json({Success: data}); 
+      response.json({success: data}); 
     });
   });
 });
@@ -44,21 +50,27 @@ app.post('/dogs', (request, response) => {
 //  P U T
 app.put('/dogs/:breed', (request, response) => {
   var breed = request.params.breed;
-  db.write(`${breed}.json`, request.body, (err, data) => {
-    if (err) response.json({Error: 'Something went wrong, sorry'});
-    response.json({Success: data});
+  var body = '';
+  request.on('data', (chunk) => {
+    body += chunk;
+  });
+  request.on('end', () => {
+    db.write(`${breed}.json`, body, (err, data) => {
+      if (err) response.json({Error: 'Something went wrong, sorry'});
+      response.json({success: data});
+    });
   });
 });
 
 //  D E L E T E
 app.delete('/dogs/:breed', (request, response) => {
   var breed = request.params.breed;
-  db.destroy(breed, (err) => {
+  db.destroy(`${breed}.json`, (err, data) => {
     if (err) response.json({Error: 'Something went wrong, sorry'});
-    response.json({Success: data});
+    response.send({success: data});
   });
 });
  
-app.listen(8080);
+// app.listen(8080);
   
 module.exports = app;
