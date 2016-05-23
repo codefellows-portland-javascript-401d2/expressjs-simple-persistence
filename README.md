@@ -1,9 +1,36 @@
-![cf](http://i.imgur.com/7v5ASc8.png) expressjs-single-resource-api
-====
+## HTTP server with persistence
 
-Lab assignment instructions are located [here](LAB.md)
+##### To install, clone this repo then run
 
-Remember to add _your_ .eslintrc file!
+    npm install
+    node index.js
 
-Completely replace the contents of this `README.md` with your proper
-developer focused project explanation and instructions.
+##### Available endpoints and methods:
+- GET
+  - / - gets a list of available festivals
+  - /resource - returns all data for each item listed.
+- POST
+  - / - adds a new festival to the database
+- PUT
+  - /resource - replaces properties of the specified resource with information provided
+- DELETE
+  - /resource - deletes the specified resource
+
+##### Data is sent and received in JSON format, as follows:
+
+    {
+      "title" : "Rock Skipping Festival",
+      "year" : 2016,
+      "location" : "Shelbyville",
+      "interests" : "rocks, skipping"
+    }
+
+##### POSTing a new entry will return the object with an added resource ID field:
+
+    {
+      "resource" : "rock_skipping_festival"
+    }
+
+##### Tests are available:
+
+    npm test
