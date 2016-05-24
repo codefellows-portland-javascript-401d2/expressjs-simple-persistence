@@ -8,7 +8,6 @@ chai.use(chaihttp);
 
 describe('End to End Test', () => {
 
-
   const request = chai.request(httpStart(app, 8080));
 
   const obj1 = {
@@ -25,7 +24,6 @@ describe('End to End Test', () => {
     'interests' : 'film, tiny things',
     'resource' : 'tiny_pictures_film_festival'
   };
-
 
   describe('Post', () => {
 

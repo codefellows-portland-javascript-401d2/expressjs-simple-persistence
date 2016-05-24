@@ -1,18 +1,29 @@
 const store = require ('../lib/store.js');
 const assert = require('chai').assert;
 
-describe('Store module',() => {
+describe('Store Module Test',() => {
+
+  const obj1 = {
+    'title' : 'Spring Chickens Festival',
+    'year' : '2014',
+    'location' : 'Omaha',
+    'interests' : 'chickens'
+  };
+
+  const obj2 = {
+    'title' : 'Popcorn Festival',
+    'year' : '2015',
+    'location' : 'Enfield',
+    'interests' : 'popcorn',
+    'resource' : 'popcorn_festival'
+  };
 
   describe('On create', () =>{
 
     it('Writes to json file and returns an object', ( done ) =>{
-      store.create({title:'hisbook', pub_year:'1973'})
+      store.create(obj1)
       .then(data => {
-        assert.isOk(data);
-        done();
-      })
-      .catch(error =>{
-        assert.isOk(error);
+        assert.equal(data.title, 'Spring Chickens Festival');
         done();
       });
     });
@@ -22,27 +33,18 @@ describe('Store module',() => {
   describe('On read', () =>{
 
     it('Returns an array of objects when given an array of resources', ( done ) =>{
-      store.read(['hisbook_1973'])
+      store.read(['spring_chickens_festival'])
       .then( data =>{
-        assert.equal(data.length, 2);
-        done();
-      })
-      .catch( error =>{
-        assert.isOk(error);
+        assert.isOk(data instanceof Array);
+        assert.isOk(data[0] instanceof Object);
         done();
       });
-
     });
-
 
     it('Returns an array of resources when given an empty array', (done) =>{
       store.read([])
       .then( data =>{
-        assert.isOk(data);
-        done();
-      })
-      .catch( error =>{
-        assert.isOk(error);
+        assert.isOk(data instanceof Array);
         done();
       });
     });
@@ -50,14 +52,10 @@ describe('Store module',() => {
 
   describe('On update', () =>{
 
-    it('renames a filename and resource and returns an object', (done) =>{
-      store.update('herbook_1986', {title:'herbook', pub_year:'2008', resource:'herbook_2008'})
+    it('Renames a filename and resource and returns an object', (done) =>{
+      store.update('spring_chickens_festival', obj2)
       .then( data => {
-        assert.isOk(data);
-        done();
-      })
-      .catch( err => {
-        assert.isOk(err);
+        assert.equal(data.resource, 'popcorn_festival');
         done();
       });
     });
@@ -67,17 +65,12 @@ describe('Store module',() => {
   describe('On delete', () =>{
 
     it('Returns a delete message', (done) =>{
-      store.delete('herbook_2008')
+      store.delete('popcorn_festival')
       .then( data => {
-        assert.equal(data.message, 'deleted herbook_2008');
-        done();
-      })
-      .catch( err => {
-        assert.isOk(err);
+        assert.equal(data.message, 'deleted popcorn_festival');
         done();
       });
     });
 
   });
-
 });

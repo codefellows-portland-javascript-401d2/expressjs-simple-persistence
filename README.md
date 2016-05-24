@@ -1,4 +1,4 @@
-## HTTP server with persistence
+## HTTP server with routing and persistence
 
 ##### To install, clone this repo then run
 
@@ -7,14 +7,14 @@
 
 ##### Available endpoints and methods:
 - GET
-  - / - gets a list of available festivals
-  - /resource - returns all data for each item listed.
+  - "/" - Gets a list of available festivals
+  - "/<resource>" - Returns all data for the specified festival.
 - POST
-  - / - adds a new festival to the database
+  - "/" - Adds a new festival to the database, send body as a JSON using the schema below.
 - PUT
-  - /resource - replaces properties of the specified resource with information provided
+  - "/<resource>" - It replaces properties of the specified festival with the object provided. Include a a JSON object in the body, be sure to include the resource property in the JSON.
 - DELETE
-  - /resource - deletes the specified resource
+  - "/<resource>" - Deletes the specified festival.
 
 ##### Data is sent and received in JSON format, as follows:
 
