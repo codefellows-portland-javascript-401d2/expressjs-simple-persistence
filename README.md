@@ -1,9 +1,38 @@
-![cf](http://i.imgur.com/7v5ASc8.png) expressjs-single-resource-api
-====
+## HTTP Server for Cataloging Festivals
 
-Lab assignment instructions are located [here](LAB.md)
+##### To install, clone this repo then run
 
-Remember to add _your_ .eslintrc file!
+    npm install
+    node index.js
 
-Completely replace the contents of this `README.md` with your proper
-developer focused project explanation and instructions.
+    The server will be listening on port 8080 by default. 
+
+##### Available endpoints and methods:
+- GET
+  - "/" - Gets a list of available festivals
+  - "/_resource_" - Returns all data for the specified festival.
+- POST
+  - "/" - Adds a new festival to the database, send body as a JSON using the schema below.
+- PUT
+  - "/_resource_" - It replaces properties of the specified festival with the object provided. Include a a JSON object in the body, be sure to include the resource property in the JSON.
+- DELETE
+  - "/_resource_" - Deletes the specified festival.
+
+##### Data is sent and received in JSON format, as follows:
+
+    {
+      "title" : "Rock Skipping Festival",
+      "year" : 2016,
+      "location" : "Shelbyville",
+      "interests" : "rocks, skipping"
+    }
+
+##### POSTing a new entry will return the object with an added resource ID field:
+
+    {
+      "resource" : "rock_skipping_festival"
+    }
+
+##### Tests are available:
+
+    npm test
