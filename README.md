@@ -5,6 +5,8 @@
     npm install
     node index.js
 
+    The server will be listening on port 8080 by default. 
+
 ##### Available endpoints and methods:
 - GET
   - "/" - Gets a list of available festivals
