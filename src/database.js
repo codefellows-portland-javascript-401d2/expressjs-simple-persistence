@@ -6,7 +6,7 @@ db.directory = './data';
 
 db.createDir = (callback) => {
   mkdirp('./data', (err) => {
-    if (err) callback(err);
+    if (err) return callback(err);
     callback(null, '/data created in project folder');
   });
 };
@@ -24,21 +24,21 @@ db.fetchAll = (callback) => {
 
 db.read = (file, callback) => {
   fs.readFile(`${db.directory}/${file}`,(err, contents) => {
-    if (err) callback(err);
+    if (err) return callback(err);
     callback(null, contents);
   });
 };
 
 db.write = (newFile, content, callback) => {
   fs.writeFile(`${db.directory}/${newFile}`, content, (err) => {
-    if (err) callback(err);
+    if (err) return callback(err);
     callback(null, `${newFile} saved!`);
   });
 };
 
 db.destroy = (path, callback) => {
   fs.unlink(`${db.directory}/${path}`, (err) => {
-    if (err) callback(err);
+    if (err) return callback(err);
     callback(null, `${path} removed!`);
   });
 };

@@ -66,11 +66,15 @@ app.put('/dogs/:breed', (request, response) => {
 app.delete('/dogs/:breed', (request, response) => {
   var breed = request.params.breed;
   db.destroy(`${breed}.json`, (err, data) => {
-    if (err) response.json({Error: 'Something went wrong, sorry'});
-    response.send({success: data});
+    if (err) {
+      response.status(404);
+      response.json({Error: 'Nothing to delete at this path'});
+    }
+    else {
+      response.send({success: data});
+    }  
   });
 });
  
-// app.listen(8080);
   
 module.exports = app;
