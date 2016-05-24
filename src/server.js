@@ -4,8 +4,7 @@ const express = require('express');
 var app = express();
 
 // creates data folder if not existing
-db.createDir((err, data) => {
-  console.log(data);
+db.createDir((err) => {
 });  
 
 //  G E T
