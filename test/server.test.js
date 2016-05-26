@@ -60,7 +60,6 @@ describe('server',() => {
           .get('/books')
           .end((err,res) => {
             assert.equal(res.statusCode, 200);
-            // assert.propertyVal(res.header,'content-type','application/json');
             let results = JSON.parse(res.text);
             assert.isArray(results);
             assert.isAtLeast(results.length, 1);
@@ -73,7 +72,6 @@ describe('server',() => {
           .get('/books/gone_with_the_wind_1964')
           .end((err,res) => {
             assert.equal(res.statusCode, 200);
-            // assert.propertyVal(res.header,'content-type','application/json');
             assert.isArray(JSON.parse(res.text));
             done();
           });
@@ -88,7 +86,6 @@ describe('server',() => {
           .post('/test')
           .end((err,res) => {
             assert.equal(res.statusCode, 404);
-            // assert.propertyVal(res.header,'content-type','text/plain');
             assert.ok(res.text);
             done();
           });
@@ -103,7 +100,6 @@ describe('server',() => {
           .end((err,res) => {
             var result = JSON.parse(res.text);
             assert.equal(res.statusCode, 200);
-            // assert.propertyVal(res.header,'content-type','application/json');
             assert.isObject(result);
             assert.property(result, 'resource');
             assert.propertyVal(result, 'genre', testPostData.genre);
@@ -120,7 +116,6 @@ describe('server',() => {
           .put('/test')
           .end((err,res) => {
             assert.equal(res.statusCode, 404);
-            // assert.propertyVal(res.header,'content-type','text/plain');
             assert.ok(res.text);
             done();
           });
@@ -136,7 +131,6 @@ describe('server',() => {
           .end((err,res) => {
             var result = JSON.parse(res.text);
             assert.equal(res.statusCode, 200);
-            // assert.propertyVal(res.header,'content-type','application/json');
             assert.isObject(result);
             assert.property(result, 'resource');
             done();
@@ -180,7 +174,6 @@ describe('server',() => {
         .patch('/books')
         .end((err,res) => {
           assert.equal(res.statusCode, 404);
-          // assert.propertyVal(res.header,'content-type','text/plain');
           assert.ok(res.text);
           done();
         });
