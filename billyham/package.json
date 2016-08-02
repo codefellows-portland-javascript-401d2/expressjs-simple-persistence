@@ -1,0 +1,36 @@
+{
+  "name": "expressjs-single-resource-api",
+  "version": "1.0.0",
+  "description": "express basics",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "npm run unit-test && npm run lint",
+    "unit-test": "mocha",
+    "lint": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codefellows-portland-javascript-401d2/expressjs-single-resource-api.git"
+  },
+  "author": "Dave Hanaagan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/codefellows-portland-javascript-401d2/expressjs-single-resource-api/issues"
+  },
+  "homepage": "https://github.com/codefellows-portland-javascript-401d2/expressjs-single-resource-api#readme",
+  "dependencies": {
+    "express": "^4.13.4",
+    "sander": "^0.5.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^2.0.1",
+    "eslint": "^2.10.2",
+    "mkdirp": "^0.5.1",
+    "mocha": "^2.5.1",
+    "rimraf": "^2.5.2"
+  }
+}
